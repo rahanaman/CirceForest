@@ -84,7 +84,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8505126814896863096}
-  - component: {fileID: 475808413615330976}
   m_Layer: 0
   m_Name: CardPointer
   m_TagString: Untagged
@@ -108,20 +107,6 @@ Transform:
   m_Father: {fileID: 7179381944051088384}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &475808413615330976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2090573951708000555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0123153ffe8eaa4bbedb8511c48e7e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pointerLine: {fileID: 8909227606457427357}
-  _pointerTip: {fileID: 6703046546371738240}
 --- !u!1 &3403397100630491972
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +462,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7179381944051088384}
   - component: {fileID: 7179381943866600434}
-  - component: {fileID: 6380770306424790907}
   m_Layer: 0
   m_Name: CardCon
   m_TagString: Untagged
@@ -533,25 +517,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 300, y: 450}
   m_EdgeRadius: 0
---- !u!114 &6380770306424790907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7179381944051088415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55087225c4c36004591a8d6356ebd650, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _issub: 0
-  _cardCon: {fileID: 7179381944051088415}
-  _cardSubDsc: {fileID: 8190023380028569237}
-  _efx: {fileID: 1143937916314159992}
-  _cardPointer: {fileID: 2090573951708000555}
-  _prevCard: {fileID: 0}
-  _rearCard: {fileID: 0}
 --- !u!1 &7179381944270386318
 GameObject:
   m_ObjectHideFlags: 0

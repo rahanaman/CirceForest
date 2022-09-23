@@ -556,7 +556,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4454157447725655467}
   - component: {fileID: 103475486083019965}
-  - component: {fileID: 49186659586940758}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -644,30 +643,6 @@ PolygonCollider2D:
       - {x: 1.5608327, y: 0.6468822}
       - {x: 1.1494358, y: 0.9309087}
       - {x: 0.7530203, y: 0.9278801}
---- !u!114 &49186659586940758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8263641735174805033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03ef023ac71717c4bb0cb7819dfb34e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyHpText: {fileID: 8269539538669811428}
-  _enemyHpBar: {fileID: 4821040609474824467}
-  _enemyData: {fileID: 11400000, guid: 041c01e6d3508b848a42c41baa56bceb, type: 2}
-  _enemyAnimator: {fileID: 4850487783338889652}
-  _playerAnimator: {fileID: 0}
-  _test: {fileID: 0}
-  _enemySprite: {fileID: 7157828689077323750}
-  _enemyNeon: {fileID: 5748328076504515925}
-  _enemyDefence: {fileID: 2677959913868492025}
-  _enemyDefenceText: {fileID: 6867504424612515568}
-  _battleManager: {fileID: 0}
-  _enemyCurrentDefence: 0
 --- !u!1 &8709779870226979053
 GameObject:
   m_ObjectHideFlags: 0

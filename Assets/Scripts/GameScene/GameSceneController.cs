@@ -10,7 +10,7 @@ public class GameSceneController : MonoBehaviour
     private void Start()
     {
         DataManager.PlayerCurrentHP = DataManager.PlayerMaxHP;
-        EventManager.CallOnPlayerHp(DataManager.PlayerMaxHP, DataManager.PlayerCurrentHP);
+        EventManager.CallOnPlayerHP(DataManager.PlayerMaxHP, DataManager.PlayerCurrentHP);
         _종료button.onClick.AddListener(OnClick종료Button);
     }
 

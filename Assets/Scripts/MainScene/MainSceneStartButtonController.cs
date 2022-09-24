@@ -12,7 +12,6 @@ public class MainSceneStartButtonController : MonoBehaviour
     }
     private void OnMouseEnter()
     {
-        Debug.Log(_button.gameObject.name);
         EventManager.CallOnSelectionCGID(_button.gameObject);
 
     }

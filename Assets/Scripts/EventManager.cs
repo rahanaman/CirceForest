@@ -9,7 +9,7 @@ public static class EventManager
     public delegate void GO1Event(GameObject value1);
 
 
-    public static Int2Event SetPlayerHp;
+    public static Int2Event SetPlayerHP;
     public static Int1Event SetPlayerAnim;
     public static Int1Event SetSelectionCG;
     public static Int1Event SetSelection;
@@ -18,9 +18,9 @@ public static class EventManager
 
 
 
-    public static void CallOnPlayerHp(int value1, int value2)
+    public static void CallOnPlayerHP(int value1, int value2)
     {
-        SetPlayerHp?.Invoke(value1, value2);
+        SetPlayerHP?.Invoke(value1, value2);
     }
     public static void CallOnPlayerAnim(int value1)
     {

@@ -14,7 +14,7 @@ public class Buttonforall : MonoBehaviour
     private void A()
     {
         DataManager.PlayerCurrentHP -= 5;
-        EventManager.CallOnPlayerHp(DataManager.PlayerCurrentHP, DataManager.PlayerMaxHP);
+        EventManager.CallOnPlayerHP(DataManager.PlayerCurrentHP, DataManager.PlayerMaxHP);
         EventManager.CallOnPlayerAnim(1);
     }
 

@@ -7,18 +7,30 @@ public class MainSceneStartController : MonoBehaviour
 {
     [SerializeField] private GameObject Panel;
     [SerializeField] private Button _종료Button;
-    [SerializeField] private List<Button> _선택Button = new List<Button>(3);
-    [SerializeField] private Image _background;
-    private Image[] _backgroundImages;
+    [SerializeField] private List<GameObject> _선택Button;
+
     void Start()
     {
-        _backgroundImages = Resources.LoadAll<Image>("Animation/SelectionCG");
+        EventManager.SetSelection += DataManager.SetSelctionData;
+        EventManager.SetSelectionCGID += SetCGID;
+        EventManager.SetSelectionID += SetID;
         _종료Button.onClick.AddListener(OnClick종료Button);
     }
 
     private void OnClick종료Button()
     {
         Panel.SetActive(false);
+    }
+
+    private void SetCGID(GameObject value1)
+    {
+        int index = _선택Button.IndexOf(value1) + 1;
+        EventManager.CallOnSelectionCG(index);
+    }
+    private void SetID(GameObject value1)
+    {
+        int index = _선택Button.IndexOf(value1) + 1;
+        EventManager.CallOnSelection(index);
     }
 
 }

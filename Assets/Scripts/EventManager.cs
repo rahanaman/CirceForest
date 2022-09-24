@@ -6,11 +6,16 @@ public static class EventManager
 {
     public delegate void Int1Event(int vlaue1);
     public delegate void Int2Event(int value1, int value2);
+    public delegate void GO1Event(GameObject value1);
 
 
     public static Int2Event SetPlayerHp;
     public static Int1Event SetPlayerAnim;
-    public static Int1Event SetSelectionBG;
+    public static Int1Event SetSelectionCG;
+    public static Int1Event SetSelection;
+    public static GO1Event SetSelectionCGID;
+    public static GO1Event SetSelectionID;
+
 
 
     public static void CallOnPlayerHp(int value1, int value2)
@@ -24,7 +29,21 @@ public static class EventManager
 
     public static void CallOnSelectionCG(int value1)
     {
-        SetSelectionBG?.Invoke(value1);
+        SetSelectionCG?.Invoke(value1);
+    }
+
+    public static void CallOnSelection(int value1)
+    {
+        SetSelection?.Invoke(value1);
+    }
+    
+    public static void CallOnSelectionCGID(GameObject value1)
+    {
+        SetSelectionCGID?.Invoke(value1);
+    }
+    public static void CallOnSelectionID(GameObject value1)
+    {
+        SetSelectionID?.Invoke(value1);
     }
 
 }

@@ -12,8 +12,8 @@ public class MainSceneStartController : MonoBehaviour
     void Start()
     {
         EventManager.SetSelection += DataManager.SetSelctionData;
-        EventManager.SetSelectionCGID += SetCGID;
-        EventManager.SetSelectionID += SetID;
+        EventManager.SetCGID += SetCGID;
+        EventManager.SetID += SetID;
         _종료Button.onClick.AddListener(OnClick종료Button);
     }
 
@@ -32,5 +32,7 @@ public class MainSceneStartController : MonoBehaviour
         int index = _선택Button.IndexOf(value1) + 1;
         EventManager.CallOnSelection(index);
     }
+
+
 
 }

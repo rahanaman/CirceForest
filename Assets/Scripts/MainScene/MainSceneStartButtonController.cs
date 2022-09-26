@@ -6,13 +6,18 @@ using UnityEngine.UI;
 public class MainSceneStartButtonController : MonoBehaviour
 {
     [SerializeField] private Button _button;
+    [SerializeField] bool _isclick;
     private void Start()
     {
         _button.onClick.AddListener(OnClick);
+        _isclick = false;
     }
     private void OnMouseEnter()
     {
-        EventManager.CallOnSelectionCGID(_button.gameObject);
+        if (!_isclick)
+        {
+            EventManager.CallOnCGID(_button.gameObject);
+        }
 
     }
 
@@ -23,6 +28,6 @@ public class MainSceneStartButtonController : MonoBehaviour
 
     private void OnClick()
     {
-        EventManager.CallOnSelectionID(_button.gameObject);
+        EventManager.CallOnID(_button.gameObject);
     }
 }

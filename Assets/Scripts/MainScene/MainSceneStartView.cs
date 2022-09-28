@@ -31,7 +31,7 @@ public class MainSceneStartView : MonoBehaviour
 
     private void SelectCharacter(int value)
     {
-        EventManager.CallOnSoundID((DataBase.SoundID)value, 3);
+        EventManager.CallOnSoundID((DataBase.SoundID)value, 0);
         StartCoroutine(SceneFade(value));
     }
     private void SceneChange()
@@ -55,7 +55,7 @@ public class MainSceneStartView : MonoBehaviour
             _backgroundDark.color = _backgroundDarkColor;
             yield return frame;
         }
-        yield return new WaitUntil(() => !SoundController.instance.IsEFX);
+        yield return new WaitForSeconds(3.5f);
         SceneChange();
     }
 

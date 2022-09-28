@@ -24,5 +24,16 @@ public static class DataManager
         PlayerID = value - 1; //CGID - 1 = PlayerID
     }
 
+    public static void CardPattern(int value, GameObject Enemy)
+    {
+        switch (value)
+        {
+            case 0:
+                CardPatternData.CardAttack(Enemy);
+                break;
+        }
+
+    }
+
 
 }

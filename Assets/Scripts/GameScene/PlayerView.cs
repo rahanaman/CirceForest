@@ -6,7 +6,7 @@ using TMPro;
 
 public class PlayerView : MonoBehaviour
 {
-    [SerializeField] private Sprite _playerSprite;
+    [SerializeField] private SpriteRenderer _playerSprite;
     [SerializeField] private TextMeshProUGUI _playerHpText;
     [SerializeField] private Image _playerHpBar;
     [SerializeField] private GameObject _playerDefence;

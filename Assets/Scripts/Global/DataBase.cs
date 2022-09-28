@@ -11,6 +11,7 @@ public static class DataBase
         ApolloSelection,
         ScyllaSelection,
         DianaSelection,
+        UISound1
     };
 
     public enum EnemyPattern
@@ -20,7 +21,7 @@ public static class DataBase
         AttackAndDefence //2,3
     };
 
-
+    public static List<CardData> CardList;
 
     public static List<EnemyData> EnemyIndexList;
 

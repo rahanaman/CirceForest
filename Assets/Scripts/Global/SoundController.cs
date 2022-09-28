@@ -49,10 +49,15 @@ public class SoundController : MonoBehaviour
     {
         _efxTime = value2;
         _efx.clip = _sounds[(int)value1];
-        if(value2 == 0)
+        if(value2 == -1)
         {
             IsEFX = false;
             _efx.loop = true;
+        }
+        else if(value2 == 0)
+        {
+            IsEFX = false;
+            _efx.loop = false;
         }
         else
         {

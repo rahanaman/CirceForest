@@ -4,7 +4,6 @@ using UnityEngine;
 
 public static class DataManager
 {
-    public static int PlayerMaxHP = 100;
     private static int _playerCurrentHP;
     public static int PlayerCurrentHP
     {
@@ -18,10 +17,11 @@ public static class DataManager
         get { return _playerID; }
         set { _playerID = value; }
     }
+    // 아폴로 0 스킬라 1 디아나 2
 
     public static void SetSelctionData(int value)
     {
-        PlayerID = value;
+        PlayerID = value - 1; //CGID - 1 = PlayerID
     }
 
 

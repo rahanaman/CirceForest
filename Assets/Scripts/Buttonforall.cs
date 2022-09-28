@@ -14,8 +14,13 @@ public class Buttonforall : MonoBehaviour
     private void A()
     {
         DataManager.PlayerCurrentHP -= 5;
-        EventManager.CallOnPlayerHp(DataManager.PlayerCurrentHP, DataManager.PlayerMaxHP);
+        EventManager.CallOnPlayerHP(DataManager.PlayerCurrentHP, DataBase.PlayerMaxHP[0]);
         EventManager.CallOnPlayerAnim(1);
+    }
+
+    private void B()
+    {
+        EventManager.CallOnSoundID(DataBase.SoundID.DianaSelection, 5);
     }
 
 }

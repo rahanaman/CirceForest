@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneController : MonoBehaviour
 {
-    [SerializeField] Button _종료button;
+    [SerializeField] Button _종료Button;
     private void Start()
     {
-        DataManager.PlayerCurrentHP = DataManager.PlayerMaxHP;
-        EventManager.CallOnPlayerHP(DataManager.PlayerMaxHP, DataManager.PlayerCurrentHP);
-        _종료button.onClick.AddListener(OnClick종료Button);
+        DataManager.PlayerCurrentHP = DataBase.PlayerMaxHP[DataManager.PlayerID];
+        EventManager.CallOnPlayerHP(DataBase.PlayerMaxHP[DataManager.PlayerID], DataManager.PlayerCurrentHP);
+        _종료Button.onClick.AddListener(OnClick종료Button);
     }
 
     private void OnClick종료Button()

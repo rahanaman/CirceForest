@@ -8,19 +8,19 @@ public class Buttonforall : MonoBehaviour
     [SerializeField] Button _다하는Button;
     private void Start()
     {
-        _다하는Button.onClick.AddListener(B);
+        _다하는Button.onClick.AddListener(A);
     }
 
     private void A()
     {
         DataManager.PlayerCurrentHP -= 5;
-        EventManager.CallOnPlayerHP(DataManager.PlayerCurrentHP, DataManager.PlayerMaxHP);
+        EventManager.CallOnPlayerHP(DataManager.PlayerCurrentHP, DataBase.PlayerMaxHP[0]);
         EventManager.CallOnPlayerAnim(1);
     }
 
     private void B()
     {
-        EventManager.CallOnID(DataBase.SoundID.DianaSelection, 3);
+        EventManager.CallOnSoundID(DataBase.SoundID.DianaSelection, 5);
     }
 
 }

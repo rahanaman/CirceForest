@@ -39,7 +39,7 @@ public static class EventManager
         SetSelection?.Invoke(value1);
     }
     
-    public static void CallOnCGID(GameObject value1)
+    public static void CallOnCGID(GameObject value1 = null)
     {
         SetCGID?.Invoke(value1);
     }
@@ -48,7 +48,7 @@ public static class EventManager
         SetID?.Invoke(value1);
     }
 
-    public static void CallOnID(DataBase.SoundID value1 , float value2 = 0)
+    public static void CallOnSoundID(DataBase.SoundID value1 , float value2 = 0)
     {
         SetEFXSoundID?.Invoke(value1, value2);
     }

@@ -11,14 +11,13 @@ public class MainSceneStartView : MonoBehaviour
     [SerializeField] private Sprite[] _backgrounds;
     private Color _backgroundDarkColor;
 
-    // Start is called before the first frame update
     void Start()
     {
         _backgroundDarkColor = _backgroundDark.color;
         _backgroundDarkColor.a = 0.5f;
         _backgroundDark.color = _backgroundDarkColor;
         EventManager.SetSelectionCG += SetSelectionCGUI;
-        EventManager.SetSelection += 캐릭터선택;
+        EventManager.SetSelection += SelectCharacter;
         _backgrounds = Resources.LoadAll<Sprite>("SelectionCG");
     }
 
@@ -30,12 +29,12 @@ public class MainSceneStartView : MonoBehaviour
         }
     }
 
-    private void 캐릭터선택(int value)
+    private void SelectCharacter(int value)
     {
-        EventManager.CallOnID((DataBase.SoundID)value, 5);
+        EventManager.CallOnSoundID((DataBase.SoundID)value, 3);
         StartCoroutine(SceneFade(value));
     }
-    private void 씬이동(int value)
+    private void SceneChange()
     {
         EventManager.SetSelectionCG = null;
         EventManager.SetSelection = null;
@@ -46,11 +45,10 @@ public class MainSceneStartView : MonoBehaviour
 
     IEnumerator SceneFade(int value)
     {
-        Debug.Log(1);
         float deltaAlpha = 3f; ;
         
         WaitForEndOfFrame frame = new WaitForEndOfFrame();
-        yield return frame;
+        //yield return frame;
         while (_backgroundDarkColor.a > 0f)
         {
             _backgroundDarkColor.a -= Time.deltaTime * deltaAlpha;
@@ -58,7 +56,7 @@ public class MainSceneStartView : MonoBehaviour
             yield return frame;
         }
         yield return new WaitUntil(() => !SoundController.instance.IsEFX);
-        씬이동(value);
+        SceneChange();
     }
 
 

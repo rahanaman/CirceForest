@@ -8,9 +8,9 @@ public class SoundController : MonoBehaviour
 
     [SerializeField] private AudioClip[] _sounds;
     [SerializeField] private AudioSource _efx;
-     float _efxTimeFlow;
-     float _efxTime;
-     public bool IsEFX;
+    float _efxTimeFlow;
+    float _efxTime;
+    public bool IsEFX;
 
     private void Awake()
     {
@@ -59,7 +59,6 @@ public class SoundController : MonoBehaviour
             IsEFX = true;
             _efx.loop = false;
         }
-        
         _efx.Play();
     }
 

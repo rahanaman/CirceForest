@@ -12,18 +12,18 @@ public class MainSceneStartButtonController : MonoBehaviour
     }
     private void OnMouseEnter()
     {
-        Debug.Log(_button.gameObject.name);
-        EventManager.CallOnSelectionCGID(_button.gameObject);
+        EventManager.CallOnCGID(_button.gameObject);
+
 
     }
 
     private void OnMouseExit()
     {
-        EventManager.CallOnSelectionCG(0);
+        EventManager.CallOnCGID();
     }
 
     private void OnClick()
     {
-        EventManager.CallOnSelectionID(_button.gameObject);
+        EventManager.CallOnID(_button.gameObject);
     }
 }

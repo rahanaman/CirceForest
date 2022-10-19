@@ -4,7 +4,6 @@ using UnityEngine;
 
 public static class DataManager
 {
-    public static int PlayerMaxHP = 100;
     private static int _playerCurrentHP;
     public static int PlayerCurrentHP
     {
@@ -19,10 +18,40 @@ public static class DataManager
         set { _playerID = value; }
     }
 
+    private static List<int> _playerDeck = new List<int>();
+    public static List<int> PlayerDeck
+    {
+        get { return _playerDeck; }
+        set { _playerDeck = value; }
+    }
+
+    private static Sprite[] _startSceneBackgroundCG = new Sprite[] { };
+    public static Sprite[] StartSceneBackgroundCG
+    {
+        get { return _startSceneBackgroundCG; }
+        set { _startSceneBackgroundCG = value; }
+    }
+    // 아폴로 0 스킬라 1 디아나 2
+
+    private static Sprite[] _cardIcon = new Sprite[] { };
+    public static Sprite[] CardIcon
+    {
+        get { return _cardIcon; }
+        set { _cardIcon = value; }
+    }
+
+    
     public static void SetSelctionData(int value)
     {
-        PlayerID = value;
+        PlayerID = value - 1; //CGID - 1 = PlayerID
     }
+
+    public static void PlusPlayerDeck(int value)
+    {
+        PlayerDeck.Add(value);
+        PlayerDeck.Sort();
+    }
+
 
 
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class DataBase
 {
@@ -21,10 +22,25 @@ public static class DataBase
         AttackAndDefence //2,3
     };
 
-    public static List<CardData> CardList;
+    public static List<CardData> CardList = new List<CardData>();
 
-    public static List<EnemyData> EnemyIndexList;
+    public static List<EnemyData> EnemyIndexList = new List<EnemyData>();
 
     public static List<List<int>> EnemyEncounter = new List<List<int>>();
+
+
+
+    public static void CardPattern(GameObject Card, GameObject Enemy) //³­¸®³²
+    {
+        int value = Card.GetComponent<int>();
+        switch (value)
+        {
+            case 0:
+                CardPatternData.CardAttack(Enemy);
+                break;
+        }
+
+    }
+
 
 }

@@ -11,10 +11,17 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private Image _playerHpBar;
     [SerializeField] private GameObject _playerDefence;
     [SerializeField] private Animator _playerAnim;
+    private readonly int HitMotion = Animator.StringToHash("IsHit");
     private void Awake()
     {
         EventManager.SetPlayerHP += SetPlayerHPUI;
         EventManager.SetPlayerAnim += SetPlayerAnim;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.SetPlayerHP -= SetPlayerHPUI;
+        EventManager.SetPlayerAnim -= SetPlayerAnim;
     }
 
     private void SetPlayerHPUI(int value1, int value2)
@@ -28,7 +35,7 @@ public class PlayerView : MonoBehaviour
         switch (value1)
         {
             case 1:
-                _playerAnim.SetTrigger("IsHit");
+                _playerAnim.SetTrigger(HitMotion);
                 break;
         }
     }

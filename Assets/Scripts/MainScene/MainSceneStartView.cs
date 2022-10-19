@@ -8,7 +8,6 @@ public class MainSceneStartView : MonoBehaviour
 {
     [SerializeField] private Image _background;
     [SerializeField] private Image _backgroundDark;
-    [SerializeField] private Sprite[] _backgrounds;
     private Color _backgroundDarkColor;
 
     void Start()
@@ -18,14 +17,19 @@ public class MainSceneStartView : MonoBehaviour
         _backgroundDark.color = _backgroundDarkColor;
         EventManager.SetSelectionCG += SetSelectionCGUI;
         EventManager.SetSelection += SelectCharacter;
-        _backgrounds = Resources.LoadAll<Sprite>("SelectionCG");
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.SetSelectionCG -= SetSelectionCGUI;
+        EventManager.SetSelection -= SelectCharacter;
     }
 
     private void SetSelectionCGUI(int value)
     {
         if (_background != null)
         {
-            _background.sprite = _backgrounds[value];
+            _background.sprite = DataManager.StartSceneBackgroundCG[value];
         }
     }
 
@@ -36,10 +40,6 @@ public class MainSceneStartView : MonoBehaviour
     }
     private void SceneChange()
     {
-        EventManager.SetSelectionCG = null;
-        EventManager.SetSelection = null;
-        EventManager.SetCGID = null;
-        EventManager.SetID = null;
         SceneManager.LoadScene("GameScene");
     }
 

@@ -8,7 +8,7 @@ public class Buttonforall : MonoBehaviour
     [SerializeField] Button _다하는Button;
     private void Start()
     {
-        _다하는Button.onClick.AddListener(A);
+        _다하는Button.onClick.AddListener(D);
     }
 
     private void A()
@@ -23,4 +23,13 @@ public class Buttonforall : MonoBehaviour
         EventManager.CallOnSoundID(DataBase.SoundID.DianaSelection, 5);
     }
 
+    private void C()
+    {
+        EventManager.CallOnBattleRoutine();
+    }
+    private void D()
+    {
+        //EventManager.CallOnCard(1);
+        
+    }
 }

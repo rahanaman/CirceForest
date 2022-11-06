@@ -1410,6 +1410,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809681440}
   m_CullTransparentMesh: 1
+--- !u!1 &968908278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 968908280}
+  - component: {fileID: 968908279}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &968908279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968908278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5af5598730837f4b87e3f4e81036ac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsCardClick: 0
+  _pointerIdle: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
+  _pointerCard: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
+  IsAnim: 0
+--- !u!4 &968908280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 968908278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.2748313, y: -1.6073626, z: 1189.6145}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1031253458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2361,7 +2408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardCon: {fileID: 7179381944051088415, guid: 0b8fac196067bcc4ab6d9cff9fe45a80, type: 3}
-  _canvas: {fileID: 8467181764651810835, guid: f719d9ff6e2e5ec44814888e63b646f4, type: 3}
+  _enemy: {fileID: 8263641735174805033, guid: 4a34036ecbbf7d34bae6723785ab50d4, type: 3}
 --- !u!4 &1716602420
 Transform:
   m_ObjectHideFlags: 0

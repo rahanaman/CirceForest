@@ -11,7 +11,6 @@ public static class EventManager
     public delegate void GO1Event(GameObject value1);
     public delegate void SoundIDEvent(DataBase.SoundID value1, float value2);
     public delegate void VoidEvent();
-    public delegate void CardEvent(CardData data, Sprite sprite);
     public delegate void ListIntEvent(List<int> value);
     public delegate void StringEvent(string value);
 
@@ -19,13 +18,14 @@ public static class EventManager
     public static Int1Event SetPlayerAnim;
     public static Int1Event SetSelectionCG;
     public static Int1Event SetSelection;
-    public static CardEvent SetCard;
     public static GO1Event SetCGID;
     public static GO1Event SetID;
+    public static GO1Event SetHandCardList;
+    public static GO1Event SetOnClickCard;
     public static SoundIDEvent SetEFXSoundID;
-    public static VoidEvent SetBattleRoutine;
     public static ListIntEvent SetCardList;
-    public static StringEvent Set전체덱;
+    public static StringEvent SetPlayerDeckNum;
+    public static Int1Event SetHandCard;
 
 
 
@@ -61,27 +61,30 @@ public static class EventManager
     {
         SetEFXSoundID?.Invoke(value1, value2);
     }
-    public static void CallOnBattleRoutine()
-    {
-        SetBattleRoutine?.Invoke();
-
-    }
 
 
-    public static void CallOnCard(CardData data, Sprite sprite)
-    {
-        SetCard?.Invoke(data, sprite);
-    }
-
-    public static void CallOnCardList(List<int> value)
+    public static void CallOnCardList(List<int> value) // 덱패널 열고 카드 확인
     {
         SetCardList?.Invoke(value);
-    }
-    
-    public static void CallOn전체덱(string value)
+    } 
+    public static void CallOnPlayerDeckNum(string value) // 전체덱 장수
     {
-        Set전체덱?.Invoke(value);
+        SetPlayerDeckNum?.Invoke(value);
     }
 
+    public static void CallOnHandCard(int value) // 손패 정리
+    {
+        SetHandCard?.Invoke(value);
+    }
+
+    public static void CallOnHandCardList(GameObject value) // 손패 정리
+    {
+        SetHandCardList?.Invoke(value);
+    }
+
+    public static void CallOnOnClickCard(GameObject value=null) // 든카드
+    {
+        SetOnClickCard?.Invoke(value);
+    }
 
 }

@@ -25,21 +25,7 @@ public static class DataManager
         set { _playerDeck = value; }
     }
 
-    private static Sprite[] _startSceneBackgroundCG = new Sprite[] { };
-    public static Sprite[] StartSceneBackgroundCG
-    {
-        get { return _startSceneBackgroundCG; }
-        set { _startSceneBackgroundCG = value; }
-    }
-    // 아폴로 0 스킬라 1 디아나 2
-
-    private static Sprite[] _cardIcon = new Sprite[] { };
-    public static Sprite[] CardIcon
-    {
-        get { return _cardIcon; }
-        set { _cardIcon = value; }
-    }
-
+    
     
     public static void SetSelctionData(int value)
     {

@@ -8,6 +8,7 @@ public class CardPanelController : MonoBehaviour
     [SerializeField] private Button _¡æ∑·Button;
     [SerializeField] private GameObject _panel;
     [SerializeField] private GameObject _panelRectTransform;
+    private List<GameObject> _cardList = new List<GameObject>();
     void Awake()
     {
         EventManager.SetCardList += SetCardList;
@@ -29,24 +30,34 @@ public class CardPanelController : MonoBehaviour
     {
         int n = value.Count;
         int k = Mathf.CeilToInt(n / 5f);
-        _panelRectTransform.GetComponent<RectTransform>().sizeDelta = new Vector2(1920, 600 * k);
-        Vector3 pos = new Vector3(-11.5f, -5 + (4 * k), 0);
+        _panelRectTransform.GetComponent<RectTransform>().sizeDelta = new Vector2(1920, 500 * k);
+        Vector3 pos = new Vector3(270, -300, 0);
         for (int i = 0; i < n; i++)
         {
             var card = Instantiate(DataLoader.CardPref[value[i]], _panelRectTransform.transform);
-            card.transform.position = pos;
+            _cardList.Add(card);
+            card.transform.localPosition = pos;
             card.SetActive(true);
             
-            if (pos.x == 11.5f)
+            if (pos.x == 1650)
             {
-                pos.x = -11.5f;
-                pos.y -= 8;
+                pos.x = 270;
+                pos.y -= 500;
             }
             else
             {
-                pos.x += 5.75f;
+                pos.x += 345;
             }
         }
+    }
+    public void OnDisable()
+    {
+        var n = _cardList.Count;
+        for (int i = 0; i < n; i++)
+        {
+            Destroy(_cardList[i]);
+        }
+        GameManager.instance.IsCardPanel = false;
     }
 
 }

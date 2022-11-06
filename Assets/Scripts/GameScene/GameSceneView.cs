@@ -5,19 +5,39 @@ using TMPro;
 
 public class GameSceneView : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI _ÀüÃ¼µ¦ButtonText;
+    [SerializeField] TextMeshProUGUI _playerDeckButtonText;
+    [SerializeField] GameObject _handCardPanel;
+
     void Start()
     {
-        EventManager.SetÀüÃ¼µ¦ += SetÀüÃ¼µ¦Num;
+        EventManager.SetPlayerDeckNum += SetPlayerDeckNum;
+        EventManager.SetHandCard += AddHandCard;
     }
 
     private void OnDestroy()
     {
-        EventManager.SetÀüÃ¼µ¦ -= SetÀüÃ¼µ¦Num;
+        EventManager.SetPlayerDeckNum -= SetPlayerDeckNum;
+        EventManager.SetHandCard -= AddHandCard;
     }
-    private void SetÀüÃ¼µ¦Num(string value)
+    private void SetPlayerDeckNum(string value)
     {
-        _ÀüÃ¼µ¦ButtonText.text = value;
-        EventManager.SetÀüÃ¼µ¦ -= SetÀüÃ¼µ¦Num;
+        _playerDeckButtonText.text = value;
     }
+
+
+
+    private void AddHandCard(int data)
+    {
+        var card = Instantiate(DataLoader.CardPref[data],_handCardPanel.transform);
+        card.SetActive(true);
+        card.transform.SetAsFirstSibling();
+        EventManager.CallOnHandCardList(card);
+        //_handCard.Add(card);
+        //SetHandCard();
+    }
+
+    public void UseHandCard(GameObject card)
+    {
+    }
+
 }

@@ -8,7 +8,7 @@ public class Buttonforall : MonoBehaviour
     [SerializeField] Button _다하는Button;
     private void Start()
     {
-        _다하는Button.onClick.AddListener(D);
+        _다하는Button.onClick.AddListener(E);
     }
 
     private void A()
@@ -25,11 +25,18 @@ public class Buttonforall : MonoBehaviour
 
     private void C()
     {
-        EventManager.CallOnBattleRoutine();
     }
     private void D()
     {
-        //EventManager.CallOnCard(1);
         
+        DataManager.PlusPlayerDeck(0);
+        EventManager.CallOnPlayerDeckNum(DataManager.PlayerDeck.Count.ToString());
+        //EventManager.CallOnCard(1);
+
+    }
+
+    private void E()
+    {
+        EventManager.CallOnHandCard(0);
     }
 }

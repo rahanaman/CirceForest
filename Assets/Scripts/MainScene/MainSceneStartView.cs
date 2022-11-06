@@ -29,7 +29,7 @@ public class MainSceneStartView : MonoBehaviour
     {
         if (_background != null)
         {
-            _background.sprite = DataManager.StartSceneBackgroundCG[value];
+            _background.sprite = DataBase.StartSceneBackgroundCG[value];
         }
     }
 

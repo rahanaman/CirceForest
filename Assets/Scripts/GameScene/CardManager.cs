@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardManager : MonoBehaviour
-{
+public class CardManager
+{ 
     private bool _cardIsSub;
-    private int _cardId;
-    //public bool IsSet;
-    void Start()
+    public bool CardIsSub
     {
-        //IsSet = false;
-        //EventManager.SetCard += SetCardData;
-        //IsSet = true;
+        get { return _cardIsSub; }
+    }
+    private int _cardId;
+    public int CardId
+    {
+        get { return _cardId; }
     }
 
-    // Update is called once per frame
     public void SetCardData(CardData data)
     {
         _cardId = data.CardId;

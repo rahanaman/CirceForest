@@ -22,6 +22,15 @@ public static class DataBase
         AttackAndDefence //2,3
     };
 
+    public enum ObjType //짝수는 타겟팅
+    {
+        None,
+        Card,
+        TargetingCard,
+        Item,
+        TargetingItem
+    };
+
     private static Sprite[] _startSceneBackgroundCG = new Sprite[] { };
     public static Sprite[] StartSceneBackgroundCG
     {
@@ -53,13 +62,13 @@ public static class DataBase
     public static List<List<Vector2>> EnemyPosition = new List<List<Vector2>>();
 
 
-    public static void CardPattern(GameObject Card, GameObject Enemy) //난리남
+    public static void CardPattern(int cardId,GameObject player, GameObject[] target) //난리남
     {
-        int value = Card.GetComponent<int>();
-        switch (value)
+        
+        switch (cardId)
         {
             case 0:
-                CardPatternData.CardAttack(Enemy);
+                CardPatternData.CardAttack(target);
                 break;
         }
 

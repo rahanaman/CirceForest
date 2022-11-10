@@ -5,18 +5,31 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public bool IsCardClick;
+    public bool IsClick;
     [SerializeField] private Texture2D _pointerIdle;
     [SerializeField] private Texture2D _pointerCard;
     public bool IsAnim;
-    public bool IsCardPanel;
+    public bool IsBattle;
+    public bool WasBattle;
+    private GameObject _onClickObj;
+    public GameObject OnClickObj
+    {
+        get { return _onClickObj; }
+    }
+
+    private DataBase.ObjType _onClickType;
+    public DataBase.ObjType OnClickType
+    {
+        get { return _onClickType; }
+    }
 
     private void Start()
     {
         SetCursorIdle();
         IsAnim = false;
-        IsCardClick = false;
-        IsCardPanel = false;
+        IsClick = false;
+        IsBattle = false;
+        WasBattle = false;
     }
     private void Awake()
     {
@@ -31,11 +44,49 @@ public class GameManager : MonoBehaviour
 
     public void SetCursorIdle()
     {
-        Cursor.SetCursor(_pointerIdle, Vector2.zero, CursorMode.ForceSoftware);
+        Cursor.SetCursor(_pointerIdle, Vector2.zero, CursorMode.Auto);
     }
 
     public void SetCursorCard()
     {
-        Cursor.SetCursor(_pointerCard, Vector2.zero, CursorMode.ForceSoftware);
+        Cursor.SetCursor(_pointerCard, Vector2.zero, CursorMode.Auto);
     }
+
+    public void SetOnClickObj(GameObject obj = null, DataBase.ObjType type = DataBase.ObjType.None)
+    {
+        if (obj == null)
+        {
+            _onClickObj = null;
+            _onClickType = type;
+        }
+        else
+        {
+            _onClickObj = obj;
+            _onClickType = type;
+        }
+        
+    }
+
+    public void EmptyObj()
+    {
+        SetCursorIdle();
+        _onClickObj = null;
+        _onClickType = DataBase.ObjType.None;
+        IsClick = false;
+    }
+
+    public void UseTargetingObj(GameObject enemy)
+    {
+        switch (_onClickType)
+        {
+            case DataBase.ObjType.TargetingCard:
+
+                break;
+            case DataBase.ObjType.TargetingItem:
+                break;
+        }
+
+    }
+
+
 }

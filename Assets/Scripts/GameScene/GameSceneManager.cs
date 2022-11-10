@@ -14,7 +14,10 @@ public class GameSceneManager
     private List<int> _usedDeck;
     private List<int> _excludedDeck;
     private int _turnNum;
-
+    public int TurnNum
+    {
+        get { return _turnNum; }
+    }
     public void Init()
     {
         _unusedDeck = DataManager.PlayerDeck.ToList();
@@ -30,29 +33,40 @@ public class GameSceneManager
         _usedDeck.Clear();
     }
 
-    public void DrawCard()
+    public void DrawCard() // 카드뽑기
     {
         var n = _unusedDeck.Count;
+        if(n <= 0)
+        {
+
+        }
         var i = Random.Range(0, n);
         EventManager.CallOnHandCard(_unusedDeck[i]);
         //View
         _unusedDeck.Remove(_unusedDeck[i]);
-
     }
 
-    public void AddHandCardList(GameObject card)
+    public void AddHandCardList(GameObject card) // 리스트에 넣기
     {
         _handDeck.Add(card);
         SetHandCard();
     }
-    public void AddHandCard(int data)
+
+    public void AddHandCard(int data) //손패 카드 추가
     {
         EventManager.CallOnHandCard(data);
 
     }
-    public void UseCard(int data)
+
+    private void RemoveHandCard(GameObject card)
     {
-        _usedDeck.Add(data);
+        _handDeck.Remove(card);
+        UseCardList(card);
+        SetHandCard();
+    }
+    private void UseCardList(GameObject card) // 손패에서 카드 사용
+    {
+        _usedDeck.Add(card.GetComponent<CardController>().GetData());
     }
     public void ExcludeCardFromUnused(int data)
     {
@@ -101,9 +115,44 @@ public class GameSceneManager
             {
                 pos.y -= 30;
             }
+            _handDeck[i].GetComponent<CardController>().SetIndex(n-i-1);
         }
-        for (int i = 0; i < n; i++)
-            _handDeck[i].GetComponent<CardController>().SetIndex();
 
     }
+
+    public void AddTurnNum()
+    {
+        _turnNum++;
+    }
+
+    public void UseTargetingCard(GameObject card, GameObject player, GameObject enemy)
+    {
+        int id = card.GetComponent<CardController>().GetData();
+        switch (id)
+        {
+            case 0:
+                enemy.GetComponent<EnemyController>().GetDamage(DataBase.CardList[id].CardPatternData[0]);
+                break;
+        }
+        RemoveHandCard(card);
+        GameObject.Destroy(card);
+        GameManager.instance.EmptyObj();
+    }
+
+    public void UseCard(GameObject card, GameObject player, GameObject[] enemys)
+    {
+        int id = card.GetComponent<CardController>().GetData();
+        switch (id)
+        {
+            case 1:
+                player.GetComponent<PlayerController>().GetDefence(DataBase.CardList[id].CardPatternData[0]);
+                break;
+        }
+        RemoveHandCard(card);
+        GameObject.Destroy(card);
+        GameManager.instance.EmptyObj();
+
+    }
+
+
 }

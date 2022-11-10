@@ -21,11 +21,13 @@ public static class EventManager
     public static GO1Event SetCGID;
     public static GO1Event SetID;
     public static GO1Event SetHandCardList;
-    public static GO1Event SetOnClickCard;
+    public static GO1Event SetOnClickObj;
     public static SoundIDEvent SetEFXSoundID;
     public static ListIntEvent SetCardList;
     public static StringEvent SetPlayerDeckNum;
     public static Int1Event SetHandCard;
+    public static GO1Event UseObj;
+    public static Int1Event SetPlayerDefence;
 
 
 
@@ -36,6 +38,11 @@ public static class EventManager
     public static void CallOnPlayerAnim(int value1)
     {
         SetPlayerAnim?.Invoke(value1);
+    }
+
+    public static void CallOnPlayerDefence(int value)
+    {
+        SetPlayerDefence?.Invoke(value);
     }
 
     public static void CallOnSelectionCG(int value1)
@@ -82,9 +89,14 @@ public static class EventManager
         SetHandCardList?.Invoke(value);
     }
 
-    public static void CallOnOnClickCard(GameObject value=null) // 든카드
+    public static void CallOnOnClickObj(GameObject value=null) // 든카드
     {
-        SetOnClickCard?.Invoke(value);
+        SetOnClickObj?.Invoke(value);
+    }
+
+    public static void CallOnUseObj(GameObject target=null)
+    {
+        UseObj?.Invoke(target);
     }
 
 }

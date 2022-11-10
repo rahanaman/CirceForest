@@ -7,8 +7,7 @@ public class CardController : MonoBehaviour
     CardManager _cardManager = new CardManager();
     [SerializeField]private GameObject _efx;
     private int _index;
-    private Vector3 _pos;
-    private Quaternion _rot;
+
     public void SetCard(CardData data)
     {
         _cardManager.SetCardData(data);
@@ -16,9 +15,9 @@ public class CardController : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!GameManager.instance.IsCardClick && !GameManager.instance.IsCardPanel)
+        if (!GameManager.instance.IsClick && GameManager.instance.IsBattle)
         {
-            Vector3 chpos = _pos;
+            Vector3 chpos = _cardManager.Pos;
             chpos.y = -400;
             
             transform.localPosition = chpos;
@@ -30,9 +29,9 @@ public class CardController : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!GameManager.instance.IsCardClick && !GameManager.instance.IsCardPanel)
+        if (!GameManager.instance.IsClick && GameManager.instance.IsBattle)
         {
-            transform.localPosition = _pos;
+            transform.localPosition = _cardManager.Pos;
             //transform.rotation = _rot;
             _efx.SetActive(false);
             transform.SetSiblingIndex(_index);
@@ -42,20 +41,20 @@ public class CardController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GameManager.instance.IsCardPanel)
+        if (GameManager.instance.IsBattle)
         {
-            if (!GameManager.instance.IsCardClick)
+            if (!GameManager.instance.IsClick)
             {
-                GameManager.instance.IsCardClick = true;
+                GameManager.instance.IsClick = true;
                 transform.rotation = Quaternion.identity;
-                EventManager.CallOnOnClickCard(gameObject);
+                GameManager.instance.SetOnClickObj(gameObject,_cardManager.CardType);
                 GameManager.instance.SetCursorCard();
             }
-            else
+            else if (GameManager.instance.OnClickObj == gameObject)
             {
-                GameManager.instance.IsCardClick = false;
-                transform.localPosition = _pos;
-                transform.rotation = _rot;
+                GameManager.instance.IsClick = false;
+                transform.localPosition = _cardManager.Pos;
+                transform.rotation = _cardManager.Rot;
                 _efx.SetActive(false);
                 transform.SetSiblingIndex(_index);
                 GameManager.instance.SetCursorIdle();
@@ -66,15 +65,21 @@ public class CardController : MonoBehaviour
 
     public void SetPosRot()
     {
-        _pos = transform.localPosition;
-        _rot = transform.rotation;
+        _cardManager.Pos = transform.localPosition;
+        _cardManager.Rot = transform.rotation;
         
     }
 
-    public void SetIndex()
+    public void SetIndex(int index)
     {
-        _index = transform.GetSiblingIndex();
+        _index = index;
     }
+
+    public int GetData()
+    {
+        return _cardManager.CardId;
+    }
+
 
 
 }

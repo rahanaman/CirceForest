@@ -11,5 +11,6 @@ public class CardData
     public bool CardIsSub;
     public string CardSubDesc;
     public List<int> CardPatternData = new List<int>();
+    public DataBase.ObjType Cardtype;
     
 }

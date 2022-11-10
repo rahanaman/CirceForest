@@ -35,6 +35,7 @@ public class CardPanelController : MonoBehaviour
         for (int i = 0; i < n; i++)
         {
             var card = Instantiate(DataLoader.CardPref[value[i]], _panelRectTransform.transform);
+            card.GetComponent<CardController>().SetCard(DataBase.CardList[value[i]]);
             _cardList.Add(card);
             card.transform.localPosition = pos;
             card.SetActive(true);
@@ -57,7 +58,9 @@ public class CardPanelController : MonoBehaviour
         {
             Destroy(_cardList[i]);
         }
-        GameManager.instance.IsCardPanel = false;
+        GameManager.instance.IsBattle = GameManager.instance.WasBattle;
     }
+
+
 
 }

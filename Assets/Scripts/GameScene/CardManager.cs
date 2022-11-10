@@ -14,10 +14,21 @@ public class CardManager
     {
         get { return _cardId; }
     }
+    private DataBase.ObjType _cardtype;
+    public DataBase.ObjType CardType
+    {
+        get { return _cardtype; }
+    }
+
+
+    public Vector3 Pos;
+
+    public Quaternion Rot;
 
     public void SetCardData(CardData data)
     {
         _cardId = data.CardId;
         _cardIsSub = data.CardIsSub;
+        _cardtype = data.Cardtype;
     }
 }

@@ -303,7 +303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4758233377865455979
 RectTransform:
   m_ObjectHideFlags: 0
@@ -434,7 +434,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3254902}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -601,6 +601,7 @@ MonoBehaviour:
   _enemyHpBar: {fileID: 4821040609474824467}
   _enemyDefence: {fileID: 2677959913868492025}
   _enemyAnim: {fileID: 4850487783338889652}
+  _enemyDefenceText: {fileID: 6867504424612515568}
 --- !u!61 &133925135
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -644,6 +645,7 @@ MonoBehaviour:
   _enemyHpBar: {fileID: 4821040609474824467}
   _enemyDefence: {fileID: 2677959913868492025}
   _enemyAnim: {fileID: 4850487783338889652}
+  _enemyDefenceText: {fileID: 0}
 --- !u!114 &1697693246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,6 +659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _efx: {fileID: 6814527650160122288}
+  _defence: {fileID: 2677959913868492025}
 --- !u!1 &8709779870226979053
 GameObject:
   m_ObjectHideFlags: 0

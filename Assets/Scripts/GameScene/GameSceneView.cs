@@ -29,11 +29,12 @@ public class GameSceneView : MonoBehaviour
     private void AddHandCard(int data)
     {
         var card = Instantiate(DataLoader.CardPref[data],_handCardPanel.transform);
+        card.GetComponent<CardController>().SetCard(DataBase.CardList[data]);
+
+
         card.SetActive(true);
         card.transform.SetAsFirstSibling();
         EventManager.CallOnHandCardList(card);
-        //_handCard.Add(card);
-        //SetHandCard();
     }
 
     public void UseHandCard(GameObject card)

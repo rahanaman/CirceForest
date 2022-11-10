@@ -11,7 +11,8 @@ public class EnemyView : MonoBehaviour
     [SerializeField] private Image _enemyHpBar;
     [SerializeField] private GameObject _enemyDefence;
     [SerializeField] private Animator _enemyAnim;
-
+    [SerializeField] private TextMeshProUGUI _enemyDefenceText;
+    private readonly int HitMotion = Animator.StringToHash("IsHit");
 
     public void SetEnemyUI(EnemyData data, Sprite sprite)
     {
@@ -19,9 +20,32 @@ public class EnemyView : MonoBehaviour
         SetEnemyHp(data.EnemyHP, data.EnemyHP);
     }
 
-    private void SetEnemyHp(int currentHP, int maxHP)
+    public void SetEnemyHp(int currentHP, int maxHP)
     {
         _enemyHpBar.fillAmount = (float)currentHP / maxHP;
         _enemyHpText.text = currentHP.ToString() + "/" + maxHP.ToString();
+    }
+
+    public void SetEnemyDefence(int value)
+    {
+        if (value <= 0)
+        {
+            _enemyDefence.SetActive(false);
+        }
+        else
+        {
+            _enemyDefence.SetActive(true);
+            _enemyDefenceText.text = value.ToString();
+        }
+    }
+
+    public void SetEnemyAnim(int value1)
+    {
+        switch (value1)
+        {
+            case 1:
+                _enemyAnim.SetTrigger(HitMotion);
+                break;
+        }
     }
 }

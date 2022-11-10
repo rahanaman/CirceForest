@@ -40,7 +40,7 @@ public class DataLoader : MonoBehaviour
         EnemyData enemyData1 = new EnemyData();
         enemyData1.EnemyId = 1;
         enemyData1.EnemyHP = 60;
-        enemyData1.EnemyPatternData = new int[4] { 7, 5, 6, 6 };
+        enemyData1.EnemyPatternData = new int[4] { 7, 5, 6, 6  };
         enemyData1.EnemyPatternList = new List<DataBase.EnemyPattern> { DataBase.EnemyPattern.Attack, DataBase.EnemyPattern.Attack, DataBase.EnemyPattern.Defence, DataBase.EnemyPattern.AttackAndDefence };
         DataBase.EnemyIndexList.Add(enemyData1);
     }
@@ -54,6 +54,7 @@ public class DataLoader : MonoBehaviour
         cardData.CardCost = 1;
         cardData.CardIsSub = false;
         cardData.CardPatternData.Add(10);
+        cardData.Cardtype = DataBase.ObjType.TargetingCard;
         DataBase.CardList.Add(cardData);
         cardData1.CardName = "Defence";
         cardData1.CardDesc = "T.T";
@@ -62,6 +63,7 @@ public class DataLoader : MonoBehaviour
         cardData1.CardIsSub = true;
         cardData1.CardSubDesc = "Defence is defence";
         cardData1.CardPatternData.Add(5);
+        cardData1.Cardtype = DataBase.ObjType.Card;
         DataBase.CardList.Add(cardData1);
 
     }

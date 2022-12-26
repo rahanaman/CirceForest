@@ -100,4 +100,10 @@ public class EnemyManager
     {
         _defence = 0;
     }
+
+    public bool IsAlive()
+    {
+        if (_currentHP <= 0) { return false; }
+        return true;
+    }
 }

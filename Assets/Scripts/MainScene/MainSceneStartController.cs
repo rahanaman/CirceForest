@@ -63,9 +63,12 @@ public class MainSceneStartController : MonoBehaviour
             }
             _¡æ∑·Button.SetActive(false);
             EventManager.CallOnSelection(index);
+            
         }
             
     }
+
+
 
 
 

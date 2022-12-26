@@ -47,5 +47,7 @@ public class EnemyView : MonoBehaviour
                 _enemyAnim.SetTrigger(HitMotion);
                 break;
         }
+
+        //공격 피격 죽음
     }
 }

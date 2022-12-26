@@ -12,10 +12,14 @@ public class GameSceneController : MonoBehaviour
     [SerializeField] GameObject _battlePanel;
     [SerializeField] Button _turnEndButton;
     [SerializeField] Button _unusedDeckButton;
+    [SerializeField] Button _usedDeckButton;
     [SerializeField] GameObject _player;
+    [SerializeField] GameObject _»ç¸ÁPanel;
+    [SerializeField] GameObject _½Â¸®Panel;
     private bool _isPlayerTurnEnd;
     private List<GameObject> _enemys = new List<GameObject>();
     private GameSceneManager _gameSceneManager = new GameSceneManager();
+    private IEnumerator _battleRoutine;
 
 
     private void Start()
@@ -23,20 +27,20 @@ public class GameSceneController : MonoBehaviour
         EventManager.CallOnPlayerHP(DataBase.PlayerMaxHP[DataManager.PlayerID], DataManager.PlayerCurrentHP);
         _Á¾·áButton.onClick.AddListener(OnClickÁ¾·áButton);
         _playerDeckButton.onClick.AddListener(OnClickPlayerDeckButton);
-        //_unusedDeckButton.onClick.AddListener(OnClickUnusedDeckButton);
+        _unusedDeckButton.onClick.AddListener(OnClickUnusedDeckButton);
+        _usedDeckButton.onClick.AddListener(OnClickUsedDeckButton);
         EventManager.CallOnPlayerDeckNum(DataManager.PlayerDeck.Count.ToString());
         EventManager.SetHandCardList += AddHandCardList;
         EventManager.UseObj += UseObj;
+        EventManager.SetCheckBattle += CheckBattle;
         _turnEndButton.onClick.AddListener(OnClickTurnEndButton);
         //EventManager.SetOnClickObj += SetOnClickObj;
-        StartBattleRoutine();
+        _battleRoutine = BattleRoutine();
+        StartCoroutine(_battleRoutine);
 
 
     }
-    private void Awake()
-    {
-        Init();
-    }
+
 
     private void OnDestroy()
     {
@@ -44,11 +48,7 @@ public class GameSceneController : MonoBehaviour
         EventManager.UseObj -= UseObj;
         //EventManager.SetOnClickObj -= SetOnClickObj;
     }
-    private void Init()
-    {
-        DataManager.PlayerCurrentHP = DataBase.PlayerMaxHP[DataManager.PlayerID];
-        
-    }
+    
     private void OnClickÁ¾·áButton()
     {
         SceneManager.LoadScene("MainScene");
@@ -72,6 +72,7 @@ public class GameSceneController : MonoBehaviour
             enemy.SetActive(true);
             _enemys.Add(enemy);
         }
+        Debug.Log(_enemys.Count);
         BattleRoutineInit();
         while (true)
         {
@@ -89,15 +90,12 @@ public class GameSceneController : MonoBehaviour
             {
                 float time = _enemys[i].GetComponent<EnemyController>().GetEnemyPattern(_gameSceneManager.TurnNum, _player);
                 yield return new WaitForSeconds(time);
-                
             }
             _gameSceneManager.AddTurnNum();
 
         }
+
         
-        
-        
-        //yield return new WaitForEndOfFrame();
     }
     private void OnClickPlayerDeckButton()
     {
@@ -107,13 +105,44 @@ public class GameSceneController : MonoBehaviour
         EventManager.CallOnCardList(DataManager.PlayerDeck);
     }
 
-    //private void OnClickUnusedDeckButton()
-    //{
-    //    _cardPanel.SetActive(true);
-    //    GameManager.instance.WasBattle = GameManager.instance.IsBattle;
-    //    GameManager.instance.IsBattle = false;
-    //    EventManager.CallOnCardList(_gameSceneManager.UnusedDeck);
-    //}
+    private void OnClickUnusedDeckButton()
+    {
+        _cardPanel.SetActive(true);
+        GameManager.instance.WasBattle = GameManager.instance.IsBattle;
+        GameManager.instance.IsBattle = false;
+        List<int> list = new List<int>();
+        foreach(var i in _gameSceneManager.UnusedDeck)
+        {
+            list.Add(i.GetComponent<CardController>().GetData());
+        }
+        EventManager.CallOnCardList(list);
+    }
+
+    private void OnClickUsedDeckButton()
+    {
+        _cardPanel.SetActive(true);
+        GameManager.instance.WasBattle = GameManager.instance.IsBattle;
+        GameManager.instance.IsBattle = false;
+        List<int> list = new List<int>();
+        foreach (var i in _gameSceneManager.UsedDeck)
+        {
+            list.Add(i.GetComponent<CardController>().GetData());
+        }
+        EventManager.CallOnCardList(list);
+    }
+
+    private void BattleRoutineEnd()
+    {
+        _gameSceneManager.End();
+        if (!_player.GetComponent<PlayerController>().IsAlive()) // ÇÃ·¹ÀÌ¾î Á×À½
+        {
+            _»ç¸ÁPanel.SetActive(true);
+        }
+        else
+        {
+            _½Â¸®Panel.SetActive(true);
+        }
+    }
 
     private void BattleRoutineInit()
     {
@@ -121,6 +150,18 @@ public class GameSceneController : MonoBehaviour
         _isPlayerTurnEnd = false;
         GameManager.instance.IsClick = false;
         GameManager.instance.IsBattle = true;
+        InitCardDeck();
+    }
+
+    private void InitCardDeck()
+    {
+        int n = DataManager.PlayerDeck.Count;
+        for (int i = 0; i < n; i++)
+        {
+            GameObject card = Instantiate(DataLoader.CardPref[DataManager.PlayerDeck[i]]);
+            card.GetComponent<CardController>().SetCard(DataBase.CardList[DataManager.PlayerDeck[i]]);
+            _gameSceneManager.InitCardDeck(card);
+        }
     }
 
     private void AddHandCardList(GameObject card)
@@ -150,6 +191,26 @@ public class GameSceneController : MonoBehaviour
                 break;
 
         }
+    }
+
+    private void CheckBattle(GameObject enemy)
+    {
+        if(enemy == _player)
+        {
+            StopCoroutine(_battleRoutine);
+            BattleRoutineEnd();
+        }
+        else
+        {
+            _enemys.Remove(enemy);
+            Debug.Log(_enemys.Count);
+            if (_enemys.Count == 0)
+            {
+                StopCoroutine(_battleRoutine);
+                BattleRoutineEnd();
+            }
+        }
+        
     }
 
 

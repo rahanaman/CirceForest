@@ -14,6 +14,11 @@ public class PlayerController : MonoBehaviour
     {
 
         _playerManager.GetDamage(damage);
+        if (!IsAlive())
+        {
+            EventManager.CallOnCheckBattle(gameObject);
+            //죽는 애니메이션 필요
+        }
         EventManager.CallOnPlayerDefence(_playerManager.Defence);
         EventManager.CallOnPlayerHP(DataManager.PlayerCurrentHP, DataBase.PlayerMaxHP[DataManager.PlayerID]);
         EventManager.CallOnPlayerAnim(1);
@@ -24,6 +29,11 @@ public class PlayerController : MonoBehaviour
         _playerManager.GetDefence(defence);
         EventManager.CallOnPlayerDefence(_playerManager.Defence);
 
+    }
+    public bool IsAlive()
+    {
+        if(DataManager.PlayerCurrentHP <= 0) { return false; }
+        else return true;
     }
        
     

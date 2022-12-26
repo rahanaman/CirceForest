@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class DataBase
 {
-    public static int[] PlayerMaxHP = new int[]{ 100, 101, 102 };
+    public static int[] PlayerMaxHP = new int[]{ 10, 101, 102 };
 
     public enum SoundID
     {

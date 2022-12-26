@@ -45,7 +45,7 @@ public class EnemyController : MonoBehaviour
     public float GetEnemyPattern(int TurnNum, GameObject player)
     {
         DataBase.EnemyPattern pattern = _enemyManager.GetEnemyPattern(TurnNum);
-        switch ((int)pattern)
+        switch ((int)pattern) // 공격 패턴 한정화해둠
         {
             case 0:
                 atk = DataBase.EnemyIndexList[_enemyManager.EnemyId].EnemyPatternData[0];
@@ -62,15 +62,22 @@ public class EnemyController : MonoBehaviour
                 GetDefence(def);
                 break;
         }
-        return 2.0f;
+        return 2.0f; // 공격애니메이션에 맞게 딜레이
     }
 
     public void GetDamage(int damage)
     {
         _enemyManager.GetDamage(damage);
+        if (!_enemyManager.IsAlive())
+        {
+            //죽는 애니메이션
+            EventManager.CallOnCheckBattle(gameObject);
+            Destroy(gameObject);
+        }
         _enemyView.SetEnemyDefence(_enemyManager.Defence);
         _enemyView.SetEnemyHp(_enemyManager.CurrentHP, _enemyManager.MaxHP);
         _enemyView.SetEnemyAnim(1);
+        
     }
 
     public void GetDefence(int defence)

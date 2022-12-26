@@ -54,5 +54,6 @@ public class PlayerManager : MonoBehaviour
         int calaulatedDefence = GetCalculatedDefence(defence);
         _defence += calaulatedDefence;
     }
+
         
 }

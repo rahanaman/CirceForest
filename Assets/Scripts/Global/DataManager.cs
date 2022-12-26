@@ -22,7 +22,6 @@ public static class DataManager
     public static List<int> PlayerDeck
     {
         get { return _playerDeck; }
-        set { _playerDeck = value; }
     }
 
     
@@ -30,12 +29,33 @@ public static class DataManager
     public static void SetSelctionData(int value)
     {
         PlayerID = value - 1; //CGID - 1 = PlayerID
+        Init();
+        LoadDebug();
+
     }
 
     public static void PlusPlayerDeck(int value)
     {
         PlayerDeck.Add(value);
         PlayerDeck.Sort();
+    }
+
+    private static void Init()
+    {
+        DataManager.PlayerCurrentHP = DataBase.PlayerMaxHP[DataManager.PlayerID];
+        _playerDeck = new List<int>();
+        
+
+    }
+
+    private static void LoadDebug()
+    {
+        DataManager.PlusPlayerDeck(0);
+        DataManager.PlusPlayerDeck(0);
+        DataManager.PlusPlayerDeck(0);
+        DataManager.PlusPlayerDeck(1);
+        DataManager.PlusPlayerDeck(1);
+        DataManager.PlusPlayerDeck(1);
     }
 
 

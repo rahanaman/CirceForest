@@ -5,14 +5,18 @@ using System.Linq;
 
 public class GameSceneManager
 {
-    private List<int> _unusedDeck;
-    public List<int> UnusedDeck
+    private List<GameObject> _unusedDeck;
+    public List<GameObject> UnusedDeck
     {
         get { return _unusedDeck; }
     }
     private List<GameObject> _handDeck;
-    private List<int> _usedDeck;
-    private List<int> _excludedDeck;
+    private List<GameObject> _usedDeck;
+    public List<GameObject> UsedDeck
+    {
+        get { return _usedDeck; }
+    }
+    private List<GameObject> _excludedDeck;
     private int _turnNum;
     public int TurnNum
     {
@@ -20,13 +24,20 @@ public class GameSceneManager
     }
     public void Init()
     {
-        _unusedDeck = DataManager.PlayerDeck.ToList();
+        _unusedDeck = new List<GameObject>();
         _handDeck = new List<GameObject>();
-        _usedDeck = new List<int>();
-        _excludedDeck = new List<int>();
+        _usedDeck = new List<GameObject>();
+        _excludedDeck = new List<GameObject>();
         _turnNum = 0;  
     }
+    public void End()
+    {
 
+    }
+    public void InitCardDeck(GameObject value)
+    {
+        _unusedDeck.Add(value);
+    }
     public void Reset()
     {
         _unusedDeck = _usedDeck.ToList();
@@ -38,12 +49,26 @@ public class GameSceneManager
         var n = _unusedDeck.Count;
         if(n <= 0)
         {
+            if(_usedDeck.Count <= 0)
+            {
+                // unusedcard도 0 이하면 못 뽑는다는 메세지 필요!
+            }
+            else
+            {
+                Reset();
+            }
+
+        }
+        if(_handDeck.Count > 9)
+        {
+            //손패 한도 있으면 여기에 정해질 듯
 
         }
         var i = Random.Range(0, n);
         EventManager.CallOnHandCard(_unusedDeck[i]);
         //View
         _unusedDeck.Remove(_unusedDeck[i]);
+        
     }
 
     public void AddHandCardList(GameObject card) // 리스트에 넣기
@@ -52,7 +77,7 @@ public class GameSceneManager
         SetHandCard();
     }
 
-    public void AddHandCard(int data) //손패 카드 추가
+    public void AddHandCard(GameObject data) //손패 카드 추가
     {
         EventManager.CallOnHandCard(data);
 
@@ -66,7 +91,8 @@ public class GameSceneManager
     }
     private void UseCardList(GameObject card) // 손패에서 카드 사용
     {
-        _usedDeck.Add(card.GetComponent<CardController>().GetData());
+        _usedDeck.Add(card);
+        card.SetActive(false);
     }
     public void ExcludeCardFromUnused(int data)
     {
@@ -135,7 +161,6 @@ public class GameSceneManager
                 break;
         }
         RemoveHandCard(card);
-        GameObject.Destroy(card);
         GameManager.instance.EmptyObj();
     }
 
@@ -149,7 +174,6 @@ public class GameSceneManager
                 break;
         }
         RemoveHandCard(card);
-        GameObject.Destroy(card);
         GameManager.instance.EmptyObj();
 
     }

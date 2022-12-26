@@ -24,6 +24,7 @@ public class MainSceneStartButtonController : MonoBehaviour
 
     private void OnClick()
     {
+        
         EventManager.CallOnID(_button.gameObject);
     }
 }

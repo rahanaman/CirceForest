@@ -25,9 +25,10 @@ public static class EventManager
     public static SoundIDEvent SetEFXSoundID;
     public static ListIntEvent SetCardList;
     public static StringEvent SetPlayerDeckNum;
-    public static Int1Event SetHandCard;
+    public static GO1Event SetHandCard;
     public static GO1Event UseObj;
     public static Int1Event SetPlayerDefence;
+    public static GO1Event SetCheckBattle;
 
 
 
@@ -79,7 +80,7 @@ public static class EventManager
         SetPlayerDeckNum?.Invoke(value);
     }
 
-    public static void CallOnHandCard(int value) // 손패 정리
+    public static void CallOnHandCard(GameObject value) // 손패 정리
     {
         SetHandCard?.Invoke(value);
     }
@@ -99,4 +100,8 @@ public static class EventManager
         UseObj?.Invoke(target);
     }
 
+    public static void CallOnCheckBattle(GameObject value)
+    {
+        SetCheckBattle?.Invoke(value);
+    }
 }

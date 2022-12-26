@@ -37,6 +37,5 @@ public class Buttonforall : MonoBehaviour
 
     private void E()
     {
-        EventManager.CallOnHandCard(0);
     }
 }

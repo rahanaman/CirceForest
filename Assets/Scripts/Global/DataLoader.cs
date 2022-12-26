@@ -27,19 +27,18 @@ public class DataLoader : MonoBehaviour
         LoadCardData();
         LoadSprite();
         LoadPrefs();
-        LoadDebug();
     }
     private void LoadEnemyData() /// 테스트용 아가들임.
     {
         EnemyData enemyData = new EnemyData();
         enemyData.EnemyId = 0;
-        enemyData.EnemyHP = 50;
+        enemyData.EnemyHP = 3;
         enemyData.EnemyPatternData = new int[4] {6,5,6,6};
         enemyData.EnemyPatternList = new List<DataBase.EnemyPattern> { DataBase.EnemyPattern.Attack, DataBase.EnemyPattern.Attack, DataBase.EnemyPattern.Defence, DataBase.EnemyPattern.AttackAndDefence };
         DataBase.EnemyIndexList.Add(enemyData);
         EnemyData enemyData1 = new EnemyData();
         enemyData1.EnemyId = 1;
-        enemyData1.EnemyHP = 60;
+        enemyData1.EnemyHP = 3;
         enemyData1.EnemyPatternData = new int[4] { 7, 5, 6, 6  };
         enemyData1.EnemyPatternList = new List<DataBase.EnemyPattern> { DataBase.EnemyPattern.Attack, DataBase.EnemyPattern.Attack, DataBase.EnemyPattern.Defence, DataBase.EnemyPattern.AttackAndDefence };
         DataBase.EnemyIndexList.Add(enemyData1);
@@ -53,7 +52,7 @@ public class DataLoader : MonoBehaviour
         cardData.CardId = 0;
         cardData.CardCost = 1;
         cardData.CardIsSub = false;
-        cardData.CardPatternData.Add(10);
+        cardData.CardPatternData.Add(7);
         cardData.Cardtype = DataBase.ObjType.TargetingCard;
         DataBase.CardList.Add(cardData);
         cardData1.CardName = "Defence";
@@ -120,19 +119,5 @@ public class DataLoader : MonoBehaviour
         get { return _enemyPref; }
     }
 
-    private void LoadDebug()
-    {
-        DataManager.PlusPlayerDeck(0);
-        DataManager.PlusPlayerDeck(0);
-        DataManager.PlusPlayerDeck(0);
-        DataManager.PlusPlayerDeck(1);
-        DataManager.PlusPlayerDeck(1);
-        DataManager.PlusPlayerDeck(1);
-        DataManager.PlusPlayerDeck(1);
-        DataManager.PlusPlayerDeck(1);
-        DataManager.PlusPlayerDeck(1);
-        DataManager.PlusPlayerDeck(1);
-        DataManager.PlusPlayerDeck(1);
-        DataManager.PlusPlayerDeck(1);
-    }
+    
 }

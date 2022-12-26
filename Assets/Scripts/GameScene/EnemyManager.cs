@@ -28,6 +28,12 @@ public class EnemyManager
     {
         get { return _enemyId; }
     }
+
+    private EnemyData _enemyData;
+    public EnemyData EnemyData
+    {
+        get { return _enemyData; }
+    }
     public void SetEnemyData(EnemyData data)
     {
         _currentHP = data.EnemyHP;
@@ -35,6 +41,7 @@ public class EnemyManager
         _enemyId = data.EnemyId;
         _enemyPatterns = data.EnemyPatternList.ToList();
         _enemyPatternNum = _enemyPatterns.Count;
+        _enemyData = data;
         ResetDefence();
     }
     public DataBase.EnemyPattern GetEnemyPattern(int TurnNum)

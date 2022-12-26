@@ -77,7 +77,7 @@ public class CardController : MonoBehaviour
 
     public int GetData()
     {
-        return _cardManager.CardId;
+        return _cardManager.CardData.CardId;
     }
 
 

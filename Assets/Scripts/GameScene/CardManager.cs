@@ -20,6 +20,12 @@ public class CardManager
         get { return _cardtype; }
     }
 
+    private CardData _cardData;
+    public CardData CardData
+    {
+        get { return _cardData; }
+    }
+
 
     public Vector3 Pos;
 
@@ -30,5 +36,6 @@ public class CardManager
         _cardId = data.CardId;
         _cardIsSub = data.CardIsSub;
         _cardtype = data.Cardtype;
+        _cardData = data;
     }
 }

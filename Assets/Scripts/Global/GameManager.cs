@@ -75,18 +75,7 @@ public class GameManager : MonoBehaviour
         IsClick = false;
     }
 
-    public void UseTargetingObj(GameObject enemy)
-    {
-        switch (_onClickType)
-        {
-            case DataBase.ObjType.TargetingCard:
-
-                break;
-            case DataBase.ObjType.TargetingItem:
-                break;
-        }
-
-    }
+    
 
 
 }

@@ -84,7 +84,7 @@ public static class EventManager
         SetHandCard?.Invoke(value);
     }
 
-    public static void CallOnHandCardList(GameObject value) // 손패 정리
+    public static void CallOnHandCardList(GameObject value) // 손패 리스트
     {
         SetHandCardList?.Invoke(value);
     }

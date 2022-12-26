@@ -23,7 +23,7 @@ public class GameSceneController : MonoBehaviour
         EventManager.CallOnPlayerHP(DataBase.PlayerMaxHP[DataManager.PlayerID], DataManager.PlayerCurrentHP);
         _종료Button.onClick.AddListener(OnClick종료Button);
         _playerDeckButton.onClick.AddListener(OnClickPlayerDeckButton);
-        _unusedDeckButton.onClick.AddListener(OnClickUnusedDeckButton);
+        //_unusedDeckButton.onClick.AddListener(OnClickUnusedDeckButton);
         EventManager.CallOnPlayerDeckNum(DataManager.PlayerDeck.Count.ToString());
         EventManager.SetHandCardList += AddHandCardList;
         EventManager.UseObj += UseObj;
@@ -107,13 +107,13 @@ public class GameSceneController : MonoBehaviour
         EventManager.CallOnCardList(DataManager.PlayerDeck);
     }
 
-    private void OnClickUnusedDeckButton()
-    {
-        _cardPanel.SetActive(true);
-        GameManager.instance.WasBattle = GameManager.instance.IsBattle;
-        GameManager.instance.IsBattle = false;
-        EventManager.CallOnCardList(_gameSceneManager.UnusedDeck);
-    }
+    //private void OnClickUnusedDeckButton()
+    //{
+    //    _cardPanel.SetActive(true);
+    //    GameManager.instance.WasBattle = GameManager.instance.IsBattle;
+    //    GameManager.instance.IsBattle = false;
+    //    EventManager.CallOnCardList(_gameSceneManager.UnusedDeck);
+    //}
 
     private void BattleRoutineInit()
     {

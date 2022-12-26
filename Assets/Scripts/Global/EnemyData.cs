@@ -7,6 +7,5 @@ public class EnemyData
     public int EnemyHP;
     public List<DataBase.EnemyPattern> EnemyPatternList = new List<DataBase.EnemyPattern>();
     public int[] EnemyPatternData = new int[4];
-    public List<string> EnemyPrediction = new List<string>();
 
 }

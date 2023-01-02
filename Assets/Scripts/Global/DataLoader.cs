@@ -74,6 +74,7 @@ public class DataLoader : MonoBehaviour
         DataBase.EnemyPosition.Add(new List<Vector2> { });
         DataBase.EnemyPosition.Add(new List<Vector2> {new Vector2(3.0f,2.6f)});
         DataBase.EnemyPosition.Add(new List<Vector2> {new Vector2(3.0f,2.6f), new Vector2(10.0f,2.6f)});
+        DataBase.SelectionList.Add(new List<DataBase.State> { DataBase.State.Battle, DataBase.State.None});
     }
 
     private void LoadSprite()

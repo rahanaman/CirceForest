@@ -29,6 +29,7 @@ public static class EventManager
     public static GO1Event UseObj;
     public static Int1Event SetPlayerDefence;
     public static GO1Event SetCheckBattle;
+    public static VoidEvent SetEndBattle;
 
 
 
@@ -103,5 +104,10 @@ public static class EventManager
     public static void CallOnCheckBattle(GameObject value)
     {
         SetCheckBattle?.Invoke(value);
+    }
+
+    public static void CallOnEndBattle()
+    {
+        SetEndBattle?.Invoke();
     }
 }

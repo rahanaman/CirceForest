@@ -30,6 +30,14 @@ public static class DataBase
         Item,
         TargetingItem
     };
+    public enum State
+    {
+        None,
+        Selection,
+        Battle,
+        Store
+    };
+
 
     private static Sprite[] _startSceneBackgroundCG = new Sprite[] { };
     public static Sprite[] StartSceneBackgroundCG
@@ -47,7 +55,6 @@ public static class DataBase
     }
 
     private static Sprite[] _enemySprite = new Sprite[] { };
-
     public static Sprite[] EnemySprite
     {
         get { return _enemySprite; }
@@ -56,24 +63,19 @@ public static class DataBase
 
     public static List<CardData> CardList = new List<CardData>();
 
-    public static List<EnemyData> EnemyIndexList = new List<EnemyData>();
 
+    public static List<EnemyData> EnemyIndexList = new List<EnemyData>();
     public static List<List<int>> EnemyEncounter = new List<List<int>>();
     public static List<List<Vector2>> EnemyPosition = new List<List<Vector2>>();
 
 
-    public static void CardPattern(int cardId,GameObject player, GameObject[] target) //난리남
+    public static List<List<State>> SelectionList = new List<List<State>>();
+
+    
+    public static int SetStateData(DataBase.State state) // 상황에 맞춰서 연산
     {
-        
-        switch (cardId)
-        {
-            case 0:
-                CardPatternData.CardAttack(target);
-                break;
-        }
-
+        return 0; //턴에 맞춰서 encounter 맞추기
     }
-
 
 
 

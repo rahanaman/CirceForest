@@ -15,6 +15,7 @@ public class 승리PanelController : MonoBehaviour
 
     private void OnClickButton()
     {
-        SceneManager.LoadScene("MainScene"); // 맵이동 관하여 나올 부분
+        EventManager.CallOnEndBattle();
+        gameObject.SetActive(false);
     }
 }

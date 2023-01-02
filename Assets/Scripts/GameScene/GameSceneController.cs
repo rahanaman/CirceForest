@@ -10,16 +10,24 @@ public class GameSceneController : MonoBehaviour
     [SerializeField] Button _playerDeckButton;
     [SerializeField] GameObject _cardPanel;
     [SerializeField] GameObject _battlePanel;
+    [SerializeField] GameObject _selectionPanel;
     [SerializeField] Button _turnEndButton;
     [SerializeField] Button _unusedDeckButton;
     [SerializeField] Button _usedDeckButton;
+    [SerializeField] List<Button> _selectionButton;
     [SerializeField] GameObject _player;
     [SerializeField] GameObject _사망Panel;
     [SerializeField] GameObject _승리Panel;
+    [SerializeField] GameObject _backgroundPanel;
+    [SerializeField] Image _fade;
+    private bool _isSelected;
     private bool _isPlayerTurnEnd;
     private List<GameObject> _enemys = new List<GameObject>();
     private GameSceneManager _gameSceneManager = new GameSceneManager();
     private IEnumerator _battleRoutine;
+    private IEnumerator _selectionRoutine;
+
+    private List<GameObject> _cards;
 
 
     private void Start()
@@ -33,20 +41,54 @@ public class GameSceneController : MonoBehaviour
         EventManager.SetHandCardList += AddHandCardList;
         EventManager.UseObj += UseObj;
         EventManager.SetCheckBattle += CheckBattle;
+        EventManager.SetEndBattle += EndBattlePanel;
         _turnEndButton.onClick.AddListener(OnClickTurnEndButton);
-        //EventManager.SetOnClickObj += SetOnClickObj;
-        _battleRoutine = BattleRoutine();
-        StartCoroutine(_battleRoutine);
+        _cards = new List<GameObject>();
+
+
+        for (int i = 0; i < _selectionButton.Count; i++)
+        {
+            int index = i;
+            _selectionButton[i].onClick.AddListener(()=> OnClickSelectionButton(index));
+        }
+        _isSelected = false;
+
+        CheckCurrentState();
 
 
     }
+    void CheckCurrentState() // 세이브 정보 읽어오기
+    {
+        _battleRoutine = BattleRoutine();
+        _selectionRoutine = SelectionRoutine();
+        switch (DataManager.CurrentState)
+        {
+            case DataBase.State.Selection:
+                StartSelectionRoutine();
+                break;
+            case DataBase.State.Battle:
+                StartBattleRoutine();
+                break;
+        }
+    }
 
+    private void StartSelectionRoutine()
+    {
+        _selectionPanel.SetActive(true);
+        StartCoroutine(_selectionRoutine);
+    }
+    private void StartBattleRoutine()
+    {
+        _battlePanel.SetActive(true);
+        StartCoroutine(_battleRoutine);
+    }
 
     private void OnDestroy()
     {
         EventManager.SetHandCardList -= AddHandCardList;
         EventManager.UseObj -= UseObj;
-        //EventManager.SetOnClickObj -= SetOnClickObj;
+        EventManager.SetEndBattle -= EndBattlePanel;
+        EventManager.SetCheckBattle -= CheckBattle;
     }
     
     private void OnClick종료Button()
@@ -54,15 +96,97 @@ public class GameSceneController : MonoBehaviour
         SceneManager.LoadScene("MainScene");
 
     }
-    private void StartBattleRoutine()
+
+    private void CheckSelection()
     {
-        StartCoroutine(BattleRoutine());
+        var data = DataBase.SelectionList[DataManager.CurrentStateData];
+        int num = data.Count;
+        for (int i = 0; i < num; i++)
+        {
+            if(data[i] == DataBase.State.None)
+            {
+                //_selectionButton[i].gameObject.SetActive(false); // 나중에 살리기
+            }
+            else
+            {
+                _selectionButton[i].gameObject.SetActive(true);
+            }
+        }
+
+    }
+
+    private void OnClickSelectionButton(int value)
+    {
+        var data = DataBase.SelectionList[DataManager.CurrentStateData];
+        DataBase.State state = data[value];
+        if(state == DataBase.State.None)
+        {
+            Debug.Log("None");
+            return;
+        }
+        int stateData = DataBase.SetStateData(state);
+        DataManager.SaveCurrentState(state, stateData);
+        _isSelected = true;
+        
+
+    }
+
+    private IEnumerator FadeOut()
+    {
+        WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+        _fade.gameObject.SetActive(true);
+        float alpha = 0f;
+        float deltaAlpha = 0.005f;
+        _fade.color = new Color(0, 0, 0, alpha);
+        while (alpha < 1.0f)
+        {
+            yield return waitForEndOfFrame;
+            alpha += deltaAlpha;
+            _fade.color = new Color(0, 0, 0, alpha);
+        }
+        
+    }
+    private IEnumerator FadeIn()
+    {
+        WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+        float alpha = 0f;
+        float deltaAlpha = 0.005f;
+        while (alpha > 0)
+        {
+            yield return waitForEndOfFrame;
+            alpha -= deltaAlpha;
+            _fade.color = new Color(0, 0, 0, alpha);
+        }
+        _fade.gameObject.SetActive(false);
+    }
+
+
+    private IEnumerator SelectionRoutine()
+    {
+        CheckSelection();
+        WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
+        _backgroundPanel.GetComponent<RectTransform>().localPosition = new Vector3(960, 0, 0);
+        Vector3 speed = new Vector3(-700f, 0, 0);
+        while (_backgroundPanel.GetComponent<RectTransform>().localPosition.x > -959.99f)
+        {
+            yield return waitForEndOfFrame;
+            
+            _backgroundPanel.GetComponent<RectTransform>().localPosition += speed * Time.deltaTime;
+        }
+        yield return new WaitUntil(() => _isSelected);
+        _isSelected = false;
+        yield return StartCoroutine(FadeOut());
+        _selectionPanel.SetActive(false);
+        yield return StartCoroutine(FadeIn());
+
+        CheckCurrentState();
+
     }
     private IEnumerator BattleRoutine()
     {
         WaitForSeconds delay = new WaitForSeconds(0.1f);
         _battlePanel.SetActive(true);
-        int encounter = Random.Range(0, 2);
+        int encounter = Random.Range(0, 2); // 적 encounter 
         var encounterList = DataBase.EnemyEncounter[encounter];
         var n = encounterList.Count;
         for (int i=0; i < n; i++)
@@ -73,7 +197,7 @@ public class GameSceneController : MonoBehaviour
             _enemys.Add(enemy);
         }
         Debug.Log(_enemys.Count);
-        BattleRoutineInit();
+        InitBattleRoutine();
         while (true)
         {
             int num = _gameSceneManager.GetDrawCardNum();
@@ -103,7 +227,7 @@ public class GameSceneController : MonoBehaviour
         GameManager.instance.WasBattle = GameManager.instance.IsBattle;
         GameManager.instance.IsBattle = false;
         EventManager.CallOnCardList(DataManager.PlayerDeck);
-    }
+    } // 전체 덱 불러오기
 
     private void OnClickUnusedDeckButton()
     {
@@ -116,7 +240,7 @@ public class GameSceneController : MonoBehaviour
             list.Add(i.GetComponent<CardController>().GetData());
         }
         EventManager.CallOnCardList(list);
-    }
+    } 
 
     private void OnClickUsedDeckButton()
     {
@@ -133,6 +257,10 @@ public class GameSceneController : MonoBehaviour
 
     private void BattleRoutineEnd()
     {
+        for (int i = 0; i < _cards.Count; i++)
+        {
+            Destroy(_cards[i]);
+        }
         _gameSceneManager.End();
         if (!_player.GetComponent<PlayerController>().IsAlive()) // 플레이어 죽음
         {
@@ -144,7 +272,16 @@ public class GameSceneController : MonoBehaviour
         }
     }
 
-    private void BattleRoutineInit()
+    private void EndBattlePanel()
+    {
+        _battlePanel.SetActive(false);
+        int stateData = DataBase.SetStateData(DataBase.State.Selection);
+        DataManager.SaveCurrentState(DataBase.State.Selection, stateData);
+        DataManager.AddTurn();
+        CheckCurrentState();
+    }
+
+    private void InitBattleRoutine()
     {
         _gameSceneManager.Init();
         _isPlayerTurnEnd = false;
@@ -156,10 +293,12 @@ public class GameSceneController : MonoBehaviour
     private void InitCardDeck()
     {
         int n = DataManager.PlayerDeck.Count;
+        _cards = new List<GameObject>();
         for (int i = 0; i < n; i++)
         {
             GameObject card = Instantiate(DataLoader.CardPref[DataManager.PlayerDeck[i]]);
             card.GetComponent<CardController>().SetCard(DataBase.CardList[DataManager.PlayerDeck[i]]);
+            _cards.Add(card);
             _gameSceneManager.InitCardDeck(card);
         }
     }

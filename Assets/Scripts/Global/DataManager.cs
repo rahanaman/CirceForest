@@ -31,10 +31,15 @@ public static class DataManager
     }
 
     private static int _gameTurn;
-
     public static int GameTurn
     {
         get { return _gameTurn; }
+    }
+
+    private static int _battleNum;
+    public static int BattleNum
+    {
+        get { return _battleNum; }
     }
 
     private static DataBase.State _currentState;
@@ -44,14 +49,14 @@ public static class DataManager
         get { return _currentState; }
     }
 
-    private static int _currentStateData;
+    private static List<int> _currentStateData = new List<int>();
 
-    public static int CurrentStateData
+    public static List<int> CurrentStateData
     {
         get { return _currentStateData; }
     }
     
-    public static void SaveCurrentState(DataBase.State state, int data)
+    public static void SaveCurrentState(DataBase.State state, List<int> data)
     {
         _currentState = state;
         _currentStateData = data;
@@ -61,13 +66,13 @@ public static class DataManager
     {
         PlayerID = value - 1; //CGID - 1 = PlayerID
         Init();
-        LoadDebug();
     }
 
     public static void PlusPlayerDeck(int value)
     {
         PlayerDeck.Add(value);
         PlayerDeck.Sort();
+        EventManager.CallOnPlayerDeckNum(DataManager.PlayerDeck.Count.ToString());
     }
 
     private static void Init()
@@ -75,8 +80,8 @@ public static class DataManager
         DataManager.PlayerCurrentHP = DataBase.PlayerMaxHP[DataManager.PlayerID];
         _playerDeck = new List<int>();
         _currentState = DataBase.State.Selection;
-        _currentStateData = 0;
         _gameTurn = 0;
+        _battleNum = 0;
         _isStart = true;
     }
 
@@ -85,7 +90,7 @@ public static class DataManager
         _gameTurn++;
     }
 
-    private static void LoadDebug()
+    public static void LoadDebug()
     {
         DataManager.PlusPlayerDeck(0);
         DataManager.PlusPlayerDeck(0);

@@ -82,6 +82,7 @@ public class DataLoader : MonoBehaviour
         DataBase.StartSceneBackgroundCG = Resources.LoadAll<Sprite>("SelectionCG");
         DataBase.CardIcon = Resources.LoadAll<Sprite>("CardIcon");
         DataBase.EnemySprite = Resources.LoadAll<Sprite>("Enemy");
+        DataBase.SelectionSprite = Resources.LoadAll<Sprite>("SelectionSprite");
     }
 
     private void LoadPrefs()

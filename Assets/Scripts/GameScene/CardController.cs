@@ -80,6 +80,22 @@ public class CardController : MonoBehaviour
         return _cardManager.CardData.CardId;
     }
 
+    public int GetCost()
+    {
+        return _cardManager.GetCost();
+    }
+
+
+    public void FailToUse()
+    {
+        GameManager.instance.IsClick = false;
+        transform.localPosition = _cardManager.Pos;
+        transform.rotation = _cardManager.Rot;
+        _efx.SetActive(false);
+        transform.SetSiblingIndex(_index);
+        GameManager.instance.SetCursorIdle();
+    }
+
 
 
 }

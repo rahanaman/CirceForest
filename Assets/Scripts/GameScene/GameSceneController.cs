@@ -37,21 +37,26 @@ public class GameSceneController : MonoBehaviour
         _playerDeckButton.onClick.AddListener(OnClickPlayerDeckButton);
         _unusedDeckButton.onClick.AddListener(OnClickUnusedDeckButton);
         _usedDeckButton.onClick.AddListener(OnClickUsedDeckButton);
-        EventManager.CallOnPlayerDeckNum(DataManager.PlayerDeck.Count.ToString());
         EventManager.SetHandCardList += AddHandCardList;
         EventManager.UseObj += UseObj;
         EventManager.SetCheckBattle += CheckBattle;
         EventManager.SetEndBattle += EndBattlePanel;
         _turnEndButton.onClick.AddListener(OnClickTurnEndButton);
         _cards = new List<GameObject>();
-
-
         for (int i = 0; i < _selectionButton.Count; i++)
         {
             int index = i;
             _selectionButton[i].onClick.AddListener(()=> OnClickSelectionButton(index));
         }
         _isSelected = false;
+        List<int> data = DataBase.SetStateData(DataBase.State.Selection);
+        DataManager.SaveCurrentState(DataBase.State.Selection, data);
+        Debug.Log(data[0]);
+        Debug.Log(data[1]);
+        //여기까지는 시작 세팅
+
+
+        DataManager.LoadDebug(); // 디버그용 카드 추가
 
         CheckCurrentState();
 
@@ -76,12 +81,12 @@ public class GameSceneController : MonoBehaviour
     {
         _selectionPanel.SetActive(true);
         StartCoroutine(_selectionRoutine);
-    }
+    } // 세이브 정보에 따라 불러오기
     private void StartBattleRoutine()
     {
         _battlePanel.SetActive(true);
         StartCoroutine(_battleRoutine);
-    }
+    } // 세이브 정보에 따라 불러오기
 
     private void OnDestroy()
     {
@@ -89,42 +94,42 @@ public class GameSceneController : MonoBehaviour
         EventManager.UseObj -= UseObj;
         EventManager.SetEndBattle -= EndBattlePanel;
         EventManager.SetCheckBattle -= CheckBattle;
-    }
+    } // 콜백 해제
     
     private void OnClick종료Button()
     {
         SceneManager.LoadScene("MainScene");
 
-    }
-
-    private void CheckSelection()
+    } // 종료 버튼
+    private void CheckSelection() // Selection Routine 시작하고 나서 선택지 뷰 설정
     {
-        var data = DataBase.SelectionList[DataManager.CurrentStateData];
+        var data = DataManager.CurrentStateData;
         int num = data.Count;
         for (int i = 0; i < num; i++)
         {
-            if(data[i] == DataBase.State.None)
+            if((DataBase.State)data[i] == DataBase.State.None)
             {
-                //_selectionButton[i].gameObject.SetActive(false); // 나중에 살리기
+                _selectionButton[i].gameObject.SetActive(false);
             }
             else
             {
                 _selectionButton[i].gameObject.SetActive(true);
+                _selectionButton[i].gameObject.GetComponent<SelectionButtonView>().SetImage((int)data[i]);// 선택지 뷰로 신호보내기
             }
         }
 
-    }
+    } 
 
-    private void OnClickSelectionButton(int value)
+    private void OnClickSelectionButton(int value) //  선택지 선택 시 정보 전달 - Save 하는 순간
     {
-        var data = DataBase.SelectionList[DataManager.CurrentStateData];
-        DataBase.State state = data[value];
+        var data = DataManager.CurrentStateData[value];
+        DataBase.State state = (DataBase.State)data;
         if(state == DataBase.State.None)
         {
             Debug.Log("None");
             return;
         }
-        int stateData = DataBase.SetStateData(state);
+        List<int> stateData = DataBase.SetStateData(state); // 연산따라 Data 저장
         DataManager.SaveCurrentState(state, stateData);
         _isSelected = true;
         
@@ -145,7 +150,7 @@ public class GameSceneController : MonoBehaviour
             _fade.color = new Color(0, 0, 0, alpha);
         }
         
-    }
+    } // 효과
     private IEnumerator FadeIn()
     {
         WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
@@ -158,12 +163,12 @@ public class GameSceneController : MonoBehaviour
             _fade.color = new Color(0, 0, 0, alpha);
         }
         _fade.gameObject.SetActive(false);
-    }
+    } //효과
 
 
     private IEnumerator SelectionRoutine()
     {
-        CheckSelection();
+        CheckSelection(); // 선택지 정리, 뷰 불러오기
         WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
         _backgroundPanel.GetComponent<RectTransform>().localPosition = new Vector3(960, 0, 0);
         Vector3 speed = new Vector3(-700f, 0, 0);
@@ -181,12 +186,12 @@ public class GameSceneController : MonoBehaviour
 
         CheckCurrentState();
 
-    }
+    } // 선택 루틴
     private IEnumerator BattleRoutine()
     {
         WaitForSeconds delay = new WaitForSeconds(0.1f);
         _battlePanel.SetActive(true);
-        int encounter = Random.Range(0, 2); // 적 encounter 
+        int encounter = DataManager.CurrentStateData[0]; // Data 읽어오기
         var encounterList = DataBase.EnemyEncounter[encounter];
         var n = encounterList.Count;
         for (int i=0; i < n; i++)
@@ -196,10 +201,13 @@ public class GameSceneController : MonoBehaviour
             enemy.SetActive(true);
             _enemys.Add(enemy);
         }
-        Debug.Log(_enemys.Count);
+        //적 세팅
         InitBattleRoutine();
         while (true)
         {
+            _gameSceneManager.SetCost();
+            _player.GetComponent<PlayerController>().SetNewTurn();
+            
             int num = _gameSceneManager.GetDrawCardNum();
             for (int i = 0; i < num; i++)
             {
@@ -209,7 +217,10 @@ public class GameSceneController : MonoBehaviour
             yield return new WaitUntil(() => _isPlayerTurnEnd);
             _isPlayerTurnEnd = false;
             int enemynum = _enemys.Count;
-            
+            for (int i = 0; i < enemynum; i++)
+            {
+                _enemys[i].GetComponent<EnemyController>().SetNewTurn();
+            }
             for (int i = 0; i < enemynum; i++)
             {
                 float time = _enemys[i].GetComponent<EnemyController>().GetEnemyPattern(_gameSceneManager.TurnNum, _player);
@@ -261,7 +272,7 @@ public class GameSceneController : MonoBehaviour
         {
             Destroy(_cards[i]);
         }
-        _gameSceneManager.End();
+        _gameSceneManager.EndBattleRoutine();
         if (!_player.GetComponent<PlayerController>().IsAlive()) // 플레이어 죽음
         {
             _사망Panel.SetActive(true);
@@ -275,7 +286,7 @@ public class GameSceneController : MonoBehaviour
     private void EndBattlePanel()
     {
         _battlePanel.SetActive(false);
-        int stateData = DataBase.SetStateData(DataBase.State.Selection);
+        List<int> stateData = DataBase.SetStateData(DataBase.State.Selection);
         DataManager.SaveCurrentState(DataBase.State.Selection, stateData);
         DataManager.AddTurn();
         CheckCurrentState();
@@ -283,7 +294,7 @@ public class GameSceneController : MonoBehaviour
 
     private void InitBattleRoutine()
     {
-        _gameSceneManager.Init();
+        _gameSceneManager.InitBattleRoutine();
         _isPlayerTurnEnd = false;
         GameManager.instance.IsClick = false;
         GameManager.instance.IsBattle = true;

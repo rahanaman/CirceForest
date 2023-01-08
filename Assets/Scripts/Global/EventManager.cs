@@ -30,6 +30,8 @@ public static class EventManager
     public static Int1Event SetPlayerDefence;
     public static GO1Event SetCheckBattle;
     public static VoidEvent SetEndBattle;
+    public static Int2Event SetCost;
+
 
 
 
@@ -109,5 +111,10 @@ public static class EventManager
     public static void CallOnEndBattle()
     {
         SetEndBattle?.Invoke();
+    }
+
+    public static void CallOnCost(int value1, int value2)
+    {
+        SetCost?.Invoke(value1, value2);
     }
 }

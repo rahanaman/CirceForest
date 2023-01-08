@@ -5,6 +5,7 @@ using System.Linq;
 
 public class GameSceneManager
 {
+    private int _handCardLimit = 8;
     private List<GameObject> _unusedDeck;
     public List<GameObject> UnusedDeck
     {
@@ -22,7 +23,10 @@ public class GameSceneManager
     {
         get { return _turnNum; }
     }
-    public void Init()
+
+    private int _currentCost;
+    private int _maxCost;
+    public void InitBattleRoutine()
     {
         _unusedDeck = new List<GameObject>();
         _handDeck = new List<GameObject>();
@@ -30,7 +34,7 @@ public class GameSceneManager
         _excludedDeck = new List<GameObject>();
         _turnNum = 0;  
     }
-    public void End()
+    public void EndBattleRoutine()
     {
 
     }
@@ -59,15 +63,18 @@ public class GameSceneManager
             }
 
         }
-        if(_handDeck.Count > 9)
+        if(_handDeck.Count > _handCardLimit)
         {
             //손패 한도 있으면 여기에 정해질 듯
 
         }
-        var i = Random.Range(0, n);
-        EventManager.CallOnHandCard(_unusedDeck[i]);
-        //View
-        _unusedDeck.Remove(_unusedDeck[i]);
+        else
+        {
+            var i = Random.Range(0, n);
+            EventManager.CallOnHandCard(_unusedDeck[i]);
+            _unusedDeck.Remove(_unusedDeck[i]);
+        }
+        
         
     }
 
@@ -154,6 +161,13 @@ public class GameSceneManager
     public void UseTargetingCard(GameObject card, GameObject player, GameObject enemy)
     {
         int id = card.GetComponent<CardController>().GetData();
+        int cost = card.GetComponent<CardController>().GetCost();
+        if(_currentCost < cost)
+        {
+            card.GetComponent<CardController>().FailToUse();
+            return;
+        }
+        UseCost(cost);
         switch (id)
         {
             case 0:
@@ -167,6 +181,13 @@ public class GameSceneManager
     public void UseCard(GameObject card, GameObject player, GameObject[] enemys)
     {
         int id = card.GetComponent<CardController>().GetData();
+        int cost = card.GetComponent<CardController>().GetCost();
+        if (_currentCost < cost)
+        {
+            card.GetComponent<CardController>().FailToUse();
+            return;
+        }
+        UseCost(cost);
         switch (id)
         {
             case 1:
@@ -176,6 +197,24 @@ public class GameSceneManager
         RemoveHandCard(card);
         GameManager.instance.EmptyObj();
 
+    }
+
+    public void SetCost()
+    {
+        _maxCost = GetCost();
+        _currentCost = _maxCost;
+        EventManager.SetCost(_currentCost, _maxCost);
+    }
+
+    private int GetCost() // 이번 턴 코스트 연산
+    {
+        return 3;
+    }
+
+    private void UseCost(int value)
+    {
+        _currentCost -= value;
+        EventManager.SetCost(_currentCost, _maxCost);
     }
 
 

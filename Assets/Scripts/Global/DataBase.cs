@@ -61,6 +61,13 @@ public static class DataBase
         set { _enemySprite = value; }
     }
 
+    private static Sprite[] _selectionSprite = new Sprite[] { };
+    public static Sprite[] SelectionSprite
+    {
+        get { return _selectionSprite; }
+        set { _selectionSprite = value; }
+    }
+
     public static List<CardData> CardList = new List<CardData>();
 
 
@@ -72,9 +79,16 @@ public static class DataBase
     public static List<List<State>> SelectionList = new List<List<State>>();
 
     
-    public static int SetStateData(DataBase.State state) // 상황에 맞춰서 연산
+    public static List<int> SetStateData(DataBase.State state) // 상황에 맞춰서 연산
     {
-        return 0; //턴에 맞춰서 encounter 맞추기
+        switch (state)
+        {
+            case DataBase.State.Selection:
+                return new List<int> { 2,0 };
+            case DataBase.State.Battle:
+                return new List<int> { 0 };
+        }
+        return new List<int> { 0 };
     }
 
 

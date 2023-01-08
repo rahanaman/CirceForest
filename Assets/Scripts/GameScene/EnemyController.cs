@@ -86,6 +86,12 @@ public class EnemyController : MonoBehaviour
         _enemyView.SetEnemyDefence(_enemyManager.Defence);
     }
 
+    public void SetNewTurn()
+    {
+        _enemyManager.ResetDefence();
+        _enemyView.SetEnemyDefence(_enemyManager.Defence);
+    }
+
 
 
 }

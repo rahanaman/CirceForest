@@ -38,4 +38,9 @@ public class CardManager
         _cardtype = data.Cardtype;
         _cardData = data;
     }
+
+    public int GetCost()
+    {
+        return _cardData.CardCost;
+    }
 }

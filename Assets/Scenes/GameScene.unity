@@ -1036,6 +1036,7 @@ GameObject:
   - component: {fileID: 397886724}
   - component: {fileID: 397886723}
   - component: {fileID: 397886722}
+  - component: {fileID: 397886725}
   m_Layer: 5
   m_Name: Selection2Button
   m_TagString: Untagged
@@ -1145,6 +1146,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397886720}
   m_CullTransparentMesh: 1
+--- !u!114 &397886725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397886720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36749cc10477fde4faf35c493f73cd90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 397886723}
 --- !u!1 &523622400
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,6 +1598,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2286500314147293984, guid: de662eb1bac0e6c4c9bbbf615325f71f, type: 3}
+      propertyPath: _costText
+      value: 
+      objectReference: {fileID: 8467181764348966411}
     - target: {fileID: 2286500314147293984, guid: de662eb1bac0e6c4c9bbbf615325f71f, type: 3}
       propertyPath: _handCardPanel
       value: 
@@ -2751,6 +2769,7 @@ GameObject:
   - component: {fileID: 1723466193}
   - component: {fileID: 1723466192}
   - component: {fileID: 1723466191}
+  - component: {fileID: 1723466194}
   m_Layer: 5
   m_Name: Selection1Button
   m_TagString: Untagged
@@ -2860,6 +2879,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1723466189}
   m_CullTransparentMesh: 1
+--- !u!114 &1723466194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1723466189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36749cc10477fde4faf35c493f73cd90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 1723466192}
 --- !u!1 &1724683122
 GameObject:
   m_ObjectHideFlags: 0

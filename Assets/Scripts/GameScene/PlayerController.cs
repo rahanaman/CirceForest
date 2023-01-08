@@ -35,6 +35,12 @@ public class PlayerController : MonoBehaviour
         if(DataManager.PlayerCurrentHP <= 0) { return false; }
         else return true;
     }
+
+    public void SetNewTurn()
+    {
+        _playerManager.ResetDefence();
+        EventManager.CallOnPlayerDefence(_playerManager.Defence);
+    }
        
     
 }
